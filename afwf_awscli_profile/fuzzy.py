@@ -70,7 +70,7 @@ class Fuzzy(T.Generic[Item]):
     def match(
         self,
         name: str,
-        threshold: int = 70,
+        threshold: int = 0,
     ) -> T.List[Item]:
         """
         Find the best matched list of items. Only highest score is returned.
@@ -88,7 +88,7 @@ class Fuzzy(T.Generic[Item]):
     def sort(
         self,
         name: str,
-        threshold: int = 70,
+        threshold: int = 0,
         limit: int = 20,
     ) -> T.List[Item]:
         """
