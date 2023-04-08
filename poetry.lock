@@ -220,6 +220,14 @@ docs = ["docfly (==1.0.2)", "furo (==2021.8.31)", "rstobj (==0.0.7)", "sphinx (=
 tests = ["pytest", "pytest-cov"]
 
 [[package]]
+name = "diskcache"
+version = "5.4.0"
+description = "Disk Cache -- Disk and file backed persistent cache."
+category = "main"
+optional = false
+python-versions = ">=3"
+
+[[package]]
 name = "docutils"
 version = "0.19"
 description = "Docutils -- Python Documentation Utilities"
@@ -682,7 +690,7 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "29bad7c012307978c7c23f389364888f7a43a6ef793447496d692a1f388ab13f"
+content-hash = "a71dfb72892e5ba0637615deb6e92cd90904a8b35580c0f0ba7a33157ecc3b93"
 
 [metadata.files]
 afwf = [
@@ -952,6 +960,10 @@ cryptography = [
 dataclasses-sqlitedict = [
     {file = "dataclasses_sqlitedict-0.1.1-py2.py3-none-any.whl", hash = "sha256:8241e171b0ed34130593afc43e8cefad52a3be8a86bfd932f0f1f3b941547b39"},
     {file = "dataclasses_sqlitedict-0.1.1.tar.gz", hash = "sha256:a0f479b4c3508a30baa4d314d39bf1dda0f3c36763aba0917e05ee4a02a93557"},
+]
+diskcache = [
+    {file = "diskcache-5.4.0-py3-none-any.whl", hash = "sha256:af3ec6d7f167bbef7b6c33d9ee22f86d3e8f2dd7131eb7c4703d8d91ccdc0cc4"},
+    {file = "diskcache-5.4.0.tar.gz", hash = "sha256:8879eb8c9b4a2509a5e633d2008634fb2b0b35c2b36192d89655dbde02419644"},
 ]
 docutils = [
     {file = "docutils-0.19-py3-none-any.whl", hash = "sha256:5e1de4d849fee02c63b040a4a3fd567f4ab104defd8a5511fbbc24a8a017efbc"},
