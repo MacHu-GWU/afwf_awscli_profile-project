@@ -6,6 +6,7 @@ from pathlib_mate import Path
 from awscli_mate import AWSCliConfig
 from awscli_mate.paths import path_config, path_credentials
 
+from ..settings import Settings
 
 @attr.define
 class Handler(afwf.Handler):
@@ -27,7 +28,13 @@ class Handler(afwf.Handler):
             path_config=self.path_config,
             path_credentials=self.path_credentials,
         )
-        awscli_config.mfa_auth(profile=profile, mfa_code=token, overwrite_default=True)
+        settings = Settings.read()
+        awscli_config.mfa_auth(
+            profile=profile,
+            mfa_code=token,
+            hours=settings.session_hours,
+            overwrite_default=settings.overwrite_default,
+        )
         return afwf.ScriptFilter()
 
 
