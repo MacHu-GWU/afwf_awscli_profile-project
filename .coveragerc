@@ -2,8 +2,11 @@
 # for more info: https://coverage.readthedocs.io/en/latest/config.html
 [run]
 omit =
-    afwf_awscli_profile/_version.py
     afwf_awscli_profile/tests/*
+    afwf_awscli_profile/handlers/run_set_default_profile.py
+    afwf_awscli_profile/handlers/run_mfa_auth.py
+    afwf_awscli_profile/handlers/view_or_edit_settings.py
+    afwf_awscli_profile/_version.py
 
 [report]
 # Regexes for lines to exclude from consideration
