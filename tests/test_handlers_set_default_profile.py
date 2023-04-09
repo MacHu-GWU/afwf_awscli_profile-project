@@ -6,7 +6,7 @@ from afwf_awscli_profile.handlers.set_default_profile import Handler
 dir_here = Path.dir_here(__file__)
 
 handler = Handler(
-    id="s3_config",
+    id="",
     path_config=dir_here.joinpath(".aws", "config"),
     path_credentials=dir_here.joinpath(".aws", "credentials"),
 )
