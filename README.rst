@@ -6,3 +6,8 @@ Features:
 
 - Full text search your aws named profiles, set given one as the default (by editing the ~/.aws files). This allows you to switch between different AWS profiles easily.
 - Do MFA authentication for a given AWS CLI. For example, suppose that you have a base profile ``my_work``, it will automatically create a ``my_work_mfa`` profile and set it as the default.
+
+
+Install
+------------------------------------------------------------------------------
+Download the latest release `here <https://github.com/MacHu-GWU/afwf_awscli_profile-project/releases>`_ and double click to install.
