@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import sys
 import afwf
 import attr
 from pathlib_mate import Path
@@ -9,6 +10,8 @@ from awscli_mate.paths import path_config, path_credentials
 from ..cache import cache
 from ..icons import IAM_ICON
 from .item import Item, FuzzyItem
+from .run_set_default_profile import handler as run_set_default_profile_handler
+
 
 @attr.define
 class Handler(afwf.Handler):
@@ -29,28 +32,31 @@ class Handler(afwf.Handler):
 
         items = list()
         for section_name, section in config.items():
-            # the python configparser always has a DEFAULT section
-            # we don't want it
-            if section_name == "DEFAULT":
+            # extract the profile name
+            # we don't want the configparser's DEFAULT section
+            # and also we don't want to use the default profile as the base profile
+            if not section_name.startswith("profile "):
                 continue
 
-            # extract the profile name
-            if section_name.startswith("profile "):
-                profile = section_name[8:]
-            else:
-                profile = section_name
+            profile = section_name[8:]
 
             # extract the region name
             region = section.get("region", "unknown-region")
 
             # create alfred items
+            cmd = run_set_default_profile_handler.encode_run_script_command(
+                bin_python=sys.executable,
+                profile=profile,
+            )
+            # afwf.log_debug_info(f"will run command: {cmd}")
             item = Item(
                 title=f"{profile} | {region}",
                 subtitle=f"set {profile!r} as the default profile",
                 autocomplete=profile,
-                arg=profile,
+                arg=cmd,
                 icon=IAM_ICON,
             ).set_name(profile)
+            item.run_script(cmd=cmd)
             item.send_notification(
                 title=f"Set AWS CLI default profile",
                 subtitle=f"profile = {profile!r}\nregion = {region!r}",

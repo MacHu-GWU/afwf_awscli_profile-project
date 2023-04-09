@@ -15,15 +15,17 @@ handler = Handler(
 class TestHandler:
     def test(self):
         sf = handler.handler("")
-        assert len(sf.items) == 3
-        assert sf.items[0].autocomplete == "default"
+        assert len(sf.items) == 2
+        assert sf.items[0].autocomplete == "company_abc_us_east_1"
+
+        print(sf.items[0].arg)
 
         sf = handler.handler("company")
-        assert len(sf.items) == 3
+        assert len(sf.items) == 2
         assert sf.items[0].autocomplete == "company_abc_us_east_1"
 
         sf = handler.handler("xyz")
-        assert len(sf.items) == 3
+        assert len(sf.items) == 2
         assert sf.items[0].autocomplete == "group_xyz_us_east_2"
 
 

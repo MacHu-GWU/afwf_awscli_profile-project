@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import typing as T
+import sys
+
 import afwf
 import attr
 from pathlib_mate import Path
@@ -10,6 +12,7 @@ from awscli_mate.paths import path_config, path_credentials
 from ..cache import cache
 from ..icons import IAM_ICON
 from .item import Item, FuzzyItem
+from .run_mfa_auth import handler as run_mfa_auth_handler
 
 
 @attr.define
@@ -84,9 +87,7 @@ class Handler(afwf.Handler):
         )
 
         item.open_url(url="https://repost.aws/knowledge-center/authenticate-mfa-cli")
-        return [
-            item,
-        ]
+        return [item]
 
     entering_mfa_token_subtitle = "continue to enter your six digit MFA token ..."
 
@@ -99,9 +100,7 @@ class Handler(afwf.Handler):
             title=f"MFA with {profile!r} + {token!r} ...",
             subtitle=self.entering_mfa_token_subtitle,
         )
-        return [
-            item,
-        ]
+        return [item]
 
     run_mfa_auto_subtitle = "Hit 'Enter' to run it ..."
 
@@ -110,15 +109,24 @@ class Handler(afwf.Handler):
         profile: str,
         token: str,
     ) -> T.List[Item]:
+        cmd = run_mfa_auth_handler.encode_run_script_command(
+            bin_python=sys.executable,
+            profile=profile,
+            token=token,
+        )
+        afwf.log_debug_info(f"will run command: {cmd}")
         item = Item(
             title=f"MFA with {profile!r} + {token!r} ...",
             subtitle=self.run_mfa_auto_subtitle,
+            arg=cmd,
             icon=afwf.Icon.from_image_file(afwf.IconFileEnum.bash),
         )
-        # item.run_script(cmd="")
-        return [
-            item,
-        ]
+        item.run_script(cmd=cmd)
+        item.send_notification(
+            title=f"MFA auth with {profile!r} + {token!r} ...",
+            subtitle=f"new profile = '{profile}__mfa'",
+        )
+        return [item]
 
     entered_invalid_token_subtitle = "Hit 'Tab' to re-enter your six digit MFA token"
 
@@ -133,12 +141,9 @@ class Handler(afwf.Handler):
             autocomplete=f"{profile} ",
             icon=afwf.Icon.from_image_file(afwf.IconFileEnum.error),
         )
-        return [
-            item,
-        ]
+        return [item]
 
     def main(self, q: afwf.Query) -> afwf.ScriptFilter:
-        # print(q)
         sf = afwf.ScriptFilter()
         profile_and_region_pairs = self.read_profile_and_region_pairs()
         profiles = {profile for profile, _ in profile_and_region_pairs}
