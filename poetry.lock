@@ -82,18 +82,6 @@ webencodings = "*"
 css = ["tinycss2 (>=1.1.0,<1.2)"]
 
 [[package]]
-name = "boto-session-manager"
-version = "1.4.2"
-description = "Python AWS SDK boto3 library enhancement"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-docs = ["docfly (==1.0.2)", "furo (==2021.8.31)", "rstobj (==0.0.7)", "sphinx (==4.3.0)", "sphinx-copybutton (==0.4.0)", "sphinx-inline-tabs (==2021.8.17b10)", "sphinx-jinja (==1.1.1)"]
-tests = ["awscli", "boto3", "pytest", "pytest-cov"]
-
-[[package]]
 name = "boto3"
 version = "1.26.109"
 description = "The AWS SDK for Python"
@@ -203,21 +191,6 @@ ssh = ["bcrypt (>=3.1.5)"]
 test = ["iso8601", "pretend", "pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-shard (>=0.1.2)", "pytest-subtests", "pytest-xdist"]
 test-randomorder = ["pytest-randomly"]
 tox = ["tox"]
-
-[[package]]
-name = "dataclasses-sqlitedict"
-version = "0.1.1"
-description = "Sqlite backed dataclasses. It is a light weight persistent storage for dataclasses."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-sqlitedict = "*"
-
-[package.extras]
-docs = ["docfly (==1.0.2)", "furo (==2021.8.31)", "rstobj (==0.0.7)", "sphinx (==4.3.0)", "sphinx-copybutton (==0.4.0)", "sphinx-inline-tabs (==2021.8.17b10)", "sphinx-jinja (==1.1.1)"]
-tests = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "diskcache"
@@ -583,14 +556,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
-name = "sqlitedict"
-version = "2.1.0"
-description = "Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -690,7 +655,7 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a71dfb72892e5ba0637615deb6e92cd90904a8b35580c0f0ba7a33157ecc3b93"
+content-hash = "dc199653fdcb54dff0a32b73d609534a63e8982837e069eb19a2400424953499"
 
 [metadata.files]
 afwf = [
@@ -715,10 +680,6 @@ awscli-mate = [
 bleach = [
     {file = "bleach-6.0.0-py3-none-any.whl", hash = "sha256:33c16e3353dbd13028ab4799a0f89a83f113405c766e9c122df8a06f5b85b3f4"},
     {file = "bleach-6.0.0.tar.gz", hash = "sha256:1a1a85c1595e07d8db14c5f09f09e6433502c51c595970edc090551f0db99414"},
-]
-boto-session-manager = [
-    {file = "boto_session_manager-1.4.2-py2.py3-none-any.whl", hash = "sha256:3d7516148107ecc93b2325d26b65f80d6300f068e6b0848369a1ad79a4fecf1e"},
-    {file = "boto_session_manager-1.4.2.tar.gz", hash = "sha256:8f886217d4a9bd5a50aa09c82e0435028ca4af6bcde81a473422a0478f98bd06"},
 ]
 boto3 = [
     {file = "boto3-1.26.109-py3-none-any.whl", hash = "sha256:a1c48674c2ff25ddced599c51d14ba7a6dbe9fd51641e8d63a6887bebd9712d7"},
@@ -957,10 +918,6 @@ cryptography = [
     {file = "cryptography-40.0.1-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:cc3a621076d824d75ab1e1e530e66e7e8564e357dd723f2533225d40fe35c60c"},
     {file = "cryptography-40.0.1.tar.gz", hash = "sha256:2803f2f8b1e95f614419926c7e6f55d828afc614ca5ed61543877ae668cc3472"},
 ]
-dataclasses-sqlitedict = [
-    {file = "dataclasses_sqlitedict-0.1.1-py2.py3-none-any.whl", hash = "sha256:8241e171b0ed34130593afc43e8cefad52a3be8a86bfd932f0f1f3b941547b39"},
-    {file = "dataclasses_sqlitedict-0.1.1.tar.gz", hash = "sha256:a0f479b4c3508a30baa4d314d39bf1dda0f3c36763aba0917e05ee4a02a93557"},
-]
 diskcache = [
     {file = "diskcache-5.4.0-py3-none-any.whl", hash = "sha256:af3ec6d7f167bbef7b6c33d9ee22f86d3e8f2dd7131eb7c4703d8d91ccdc0cc4"},
     {file = "diskcache-5.4.0.tar.gz", hash = "sha256:8879eb8c9b4a2509a5e633d2008634fb2b0b35c2b36192d89655dbde02419644"},
@@ -1080,9 +1037,6 @@ secretstorage = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
-]
-sqlitedict = [
-    {file = "sqlitedict-2.1.0.tar.gz", hash = "sha256:03d9cfb96d602996f1d4c2db2856f1224b96a9c431bdd16e78032a72940f9e8c"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
