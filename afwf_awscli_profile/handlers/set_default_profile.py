@@ -75,9 +75,38 @@ class Handler(afwf.Handler):
         # example:
         # - "  any query would be fine  "
         else:
-            sf.items.extend(
-                FuzzyItem.from_items(items).sort(" ".join(q.trimmed_parts))
-            )
+            if q.trimmed_parts[0] == "?":
+                largetype = "\n".join(
+                    [
+                        "Example:",
+                        "",
+                        (
+                            "Let's say you have two predefined aws profiles in your "
+                            "'~/.aws/config' file and '~/.aws/credentials' file, "
+                            "'company_abc_us_east_1' and 'group_xyz_us_east_2'. "
+                            "You can use full text search to locate the profile, "
+                            "and hit 'enter' to set it as the default profile. "
+                            "It actually copies all the data in the selected profile "
+                            "to the 'default' profile. "
+                        )
+                    ]
+                )
+                sf.items.append(
+                    Item(
+                        title="This workflow can set given AWS CLI profile as the default",
+                        subtitle="hit 'CMD + L' to see more details",
+                        autocomplete=" ",
+                        text=afwf.Text(
+                            largetype=largetype,
+                        ),
+                        icon=afwf.Icon.from_image_file(afwf.IconFileEnum.info),
+                    )
+                )
+            else:
+                sf.items.extend(
+                    FuzzyItem.from_items(items).sort(" ".join(q.trimmed_parts))
+                )
         return sf
+
 
 handler = Handler(id="set_default_profile")
