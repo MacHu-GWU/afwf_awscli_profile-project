@@ -17,7 +17,7 @@ dir_project_home.mkdir_if_not_exists()
 dir_cache = dir_project_home / ".cache"
 path_settings_sqlite = dir_project_home / "settings.sqlite"
 
-path_config_json = dir_project_home / "config.json"
+path_settings_json = dir_project_home / "settings.json"
 
 # ------------------------------------------------------------------------------
 # Virtual Environment Related

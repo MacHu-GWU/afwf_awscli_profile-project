@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import typing as T
-import dataclasses
 from pathlib_mate import Path
-from afwf_awscli_profile.paths import path_settings_sqlite
+from afwf_awscli_profile.settings import Settings
+
+dir_here = Path.dir_here(__file__)
+path_settings_json = dir_here.joinpath("test-settings.json")
+
 
 def test():
-    path_settings_sqlite.remove_if_exists()
-    # print(path_settings_sqlite.exists())
+    path_settings_json.remove_if_exists()
 
-    from afwf_awscli_profile.settings import settings
-    # print(settings)
+    settings = Settings.read(path_settings_json)
+    settings.session_hours = 24
+    settings.write(path_settings_json)
+
+    settings = Settings.read(path_settings_json)
+    assert settings.session_hours == 24
 
 
 if __name__ == "__main__":

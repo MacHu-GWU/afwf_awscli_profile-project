@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 
 import typing as T
+import json
 import dataclasses
-from sqlitedict import SqliteDict
-from dataclasses_sqlitedict import SingleTableDataModel
+from pathlib_mate import Path
 
-from .paths import path_settings_sqlite
+from .paths import path_settings_json
 
 
 @dataclasses.dataclass
-class Settings(SingleTableDataModel):
+class Settings:
     aws_profile: T.Optional[str] = dataclasses.field(default=None)
     aws_region: T.Optional[str] = dataclasses.field(default=None)
-    cache_expire: T.Optional[int] = dataclasses.field(default=60)
-    max_results: T.Optional[int] = dataclasses.field(default=20)
+    session_hours: T.Optional[int] = dataclasses.field(default=12)
+    overwrite_default: T.Optional[bool] = dataclasses.field(default=True)
 
+    @classmethod
+    def read(cls, path: Path = path_settings_json) -> "Settings":
+        if path.exists():
+            return Settings(**json.loads(path.read_text()))
+        else:
+            settings = Settings()
+            settings.write(path)
+            return settings
 
-# read from existing settings
-if path_settings_sqlite.exists():  # pragma: no cover
-    db = SqliteDict(path_settings_sqlite.abspath, autocommit=False)
-    settings = Settings.read(db)
-# set default settings
-else:  # pragma: no cover
-    db = SqliteDict(path_settings_sqlite.abspath, autocommit=False)
-    settings = Settings(db=db)
-    settings.write()
+    def write(self, path: Path = path_settings_json):
+        path.write_text(json.dumps(dataclasses.asdict(self), indent=4))
