@@ -102,7 +102,7 @@ class Handler(afwf.Handler):
         )
         return [item]
 
-    run_mfa_auto_subtitle = "Hit 'Enter' to run it ..."
+    run_mfa_auth_subtitle = "Hit 'Enter' to run it ..."
 
     def run_mfa_auth(
         self,
@@ -117,14 +117,14 @@ class Handler(afwf.Handler):
         afwf.log_debug_info(f"will run command: {cmd}")
         item = Item(
             title=f"MFA with {profile!r} + {token!r} ...",
-            subtitle=self.run_mfa_auto_subtitle,
+            subtitle=self.run_mfa_auth_subtitle,
             arg=cmd,
             icon=afwf.Icon.from_image_file(afwf.IconFileEnum.bash),
         )
         item.run_script(cmd=cmd)
         item.send_notification(
-            title=f"MFA auth with {profile!r} + {token!r} ...",
-            subtitle=f"new profile = '{profile}__mfa'",
+            title=f"aws cli MFA with:",
+            subtitle=f"base profile = {profile!r}\nnew profile = '{profile}__mfa'",
         )
         return [item]
 

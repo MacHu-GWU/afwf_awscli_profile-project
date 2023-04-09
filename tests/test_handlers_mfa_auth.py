@@ -34,7 +34,8 @@ class TestHandler:
 
     def assert_run_mfa_auth(self, items: T.List[Item]):
         assert len(items) == 1
-        assert items[0].subtitle == handler.run_mfa_auto_subtitle
+        assert items[0].subtitle == handler.run_mfa_auth_subtitle
+        print(items[0].variables)
 
     def assert_entered_invalid_token(self, items: T.List[Item]):
         assert len(items) == 1
