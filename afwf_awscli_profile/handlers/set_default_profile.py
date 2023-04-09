@@ -78,8 +78,6 @@ class Handler(afwf.Handler):
             if q.trimmed_parts[0] == "?":
                 largetype = "\n".join(
                     [
-                        "Example:",
-                        "",
                         (
                             "Let's say you have two predefined aws profiles in your "
                             "'~/.aws/config' file and '~/.aws/credentials' file, "

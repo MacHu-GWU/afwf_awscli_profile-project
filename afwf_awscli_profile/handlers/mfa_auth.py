@@ -153,6 +153,31 @@ class Handler(afwf.Handler):
         # - "    "
         if len(q.trimmed_parts) == 0:
             sf.items.extend(items)
+        elif q.trimmed_parts[0] == "?":
+            largetype = "\n".join(
+                [
+                    (
+                        "Let's say you have a named aws profiles in your "
+                        "'~/.aws/config' file and '~/.aws/credentials' file, "
+                        "'company_abc_us_east_1'. "
+                        "You can use full text search to locate this profile, "
+                        "and enter six digits MFA token to create a new profile "
+                        "called 'company_abc_us_east_1_mfa', and set it "
+                        "as the default."
+                    )
+                ]
+            )
+            sf.items.append(
+                Item(
+                    title="This workflow can use a AWS CLI profile to do MFA",
+                    subtitle="hit 'CMD + L' to see more details",
+                    autocomplete=" ",
+                    text=afwf.Text(
+                        largetype=largetype,
+                    ),
+                    icon=afwf.Icon.from_image_file(afwf.IconFileEnum.info),
+                )
+            )
         # example:
         # - "profile_name"
         # - "profile_substr"
