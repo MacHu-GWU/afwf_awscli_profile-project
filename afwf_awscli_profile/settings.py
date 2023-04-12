@@ -20,7 +20,7 @@ class Settings:
         if path.exists():
             return Settings(**json.loads(path.read_text()))
         else:
-            settings = Settings()
+            settings = cls()
             settings.write(path)
             return settings
 
