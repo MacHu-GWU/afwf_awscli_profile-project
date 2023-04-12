@@ -3,8 +3,11 @@
 import afwf
 import attr
 from pathlib_mate import Path
+
 from awscli_mate import AWSCliConfig
 from awscli_mate.paths import path_config, path_credentials
+
+from ..settings import Settings
 
 
 @attr.define
@@ -27,6 +30,11 @@ class Handler(afwf.Handler):
             path_credentials=self.path_credentials,
         )
         awscli_config.set_profile_as_default(profile)
+
+        settings = Settings.read()
+        settings.aws_profile = profile
+        settings.write()
+
         return afwf.ScriptFilter()
 
 

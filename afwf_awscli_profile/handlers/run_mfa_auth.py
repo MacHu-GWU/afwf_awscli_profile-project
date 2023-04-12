@@ -35,6 +35,12 @@ class Handler(afwf.Handler):
             hours=settings.session_hours,
             overwrite_default=settings.overwrite_default,
         )
+
+        if settings.overwrite_default:
+            new_profile = f"{profile}_mfa"
+            settings.aws_profile = new_profile
+            settings.write()
+
         return afwf.ScriptFilter()
 
 
