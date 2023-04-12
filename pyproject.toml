@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "afwf_awscli_profile"
-version = "0.1.1"
+version = "0.1.2"
 description = "A sample Alfred Workflow Python project"
 authors = ["Sanhe Hu <husanhe@gmail.com>"]
 
@@ -9,7 +9,7 @@ authors = ["Sanhe Hu <husanhe@gmail.com>"]
 python = "^3.7"
 afwf = "0.3.2"
 pathlib_mate = " 1.2.1"
-awscli_mate = "0.2.1"
+awscli_mate = "0.3.2"
 diskcache = "5.4.0"
 fuzzywuzzy = "0.18.0"
 boto3 = "^1.24.96"
