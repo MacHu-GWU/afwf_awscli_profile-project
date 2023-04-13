@@ -4,26 +4,10 @@
 Disk cache for Alfred Workflow.
 """
 
-import typing as T
-from diskcache import Cache
-from pathlib_mate import Path
+from afwf.opt.cache import Cache
 
 from .paths import dir_cache
 
 dir_cache.parent.mkdir(parents=True, exist_ok=True)
 
-
-def decohints(decorator: T.Callable) -> T.Callable:
-    return decorator
-
-
-class TypedCache(Cache):
-    def typed_memoize(self, name=None, typed=False, expire=None, tag=None, ignore=()):
-        @decohints
-        def decorator(func):
-            return self.memoize(name, typed, expire, tag, ignore)(func)
-
-        return decorator
-
-
-cache = TypedCache(dir_cache.abspath)
+cache = Cache(dir_cache.abspath)
