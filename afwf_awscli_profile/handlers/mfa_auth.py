@@ -4,6 +4,7 @@ import typing as T
 import sys
 
 import afwf
+from afwf.opt.fuzzy_item import Item, FuzzyItem
 import attr
 from pathlib_mate import Path
 from awscli_mate import AWSCliConfig
@@ -11,8 +12,8 @@ from awscli_mate.paths import path_config, path_credentials
 
 from ..cache import cache
 from ..icons import IAM_ICON
-from .item import Item, FuzzyItem
 from .run_mfa_auth import handler as run_mfa_auth_handler
+from .help import get_help_item
 
 
 @attr.define
@@ -60,7 +61,7 @@ class Handler(afwf.Handler):
                 autocomplete=f"{profile} ",
                 arg=profile,
                 icon=IAM_ICON,
-            ).set_name(profile)
+            ).set_fuzzy_match_name(profile)
             items.append(item)
         return items
 
@@ -118,10 +119,10 @@ class Handler(afwf.Handler):
         item = Item(
             title=f"MFA with {profile!r} + {token!r} ...",
             subtitle=self.run_mfa_auth_subtitle,
-            arg=cmd,
             icon=afwf.Icon.from_image_file(afwf.IconFileEnum.bash),
         )
         item.run_script(cmd=cmd)
+        item.arg = profile
         item.send_notification(
             title=f"aws cli MFA with:",
             subtitle=f"base profile = {profile!r}\nnew profile = '{profile}__mfa'",
@@ -153,31 +154,8 @@ class Handler(afwf.Handler):
         # - "    "
         if len(q.trimmed_parts) == 0:
             sf.items.extend(items)
-        elif q.trimmed_parts[0] == "?":
-            largetype = "\n".join(
-                [
-                    (
-                        "Let's say you have a named aws profiles in your "
-                        "'~/.aws/config' file and '~/.aws/credentials' file, "
-                        "'company_abc_us_east_1'. "
-                        "You can use full text search to locate this profile, "
-                        "and enter six digits MFA token to create a new profile "
-                        "called 'company_abc_us_east_1_mfa', and set it "
-                        "as the default."
-                    )
-                ]
-            )
-            sf.items.append(
-                Item(
-                    title="This workflow can use a AWS CLI profile to do MFA",
-                    subtitle="hit 'CMD + L' to see more details",
-                    autocomplete=" ",
-                    text=afwf.Text(
-                        largetype=largetype,
-                    ),
-                    icon=afwf.Icon.from_image_file(afwf.IconFileEnum.info),
-                )
-            )
+        elif q.trimmed_parts[0].startswith("?"):
+            sf.items.append(get_help_item())
         # example:
         # - "profile_name"
         # - "profile_substr"

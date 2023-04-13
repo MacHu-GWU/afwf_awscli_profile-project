@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import sys
+
 import afwf
+from afwf.opt.fuzzy_item import Item, FuzzyItem
 import attr
 from pathlib_mate import Path
 from awscli_mate import AWSCliConfig
@@ -9,8 +11,8 @@ from awscli_mate.paths import path_config, path_credentials
 
 from ..cache import cache
 from ..icons import IAM_ICON
-from .item import Item, FuzzyItem
 from .run_set_default_profile import handler as run_set_default_profile_handler
+from .help import get_help_item
 
 
 @attr.define
@@ -53,10 +55,10 @@ class Handler(afwf.Handler):
                 title=f"{profile} | {region}",
                 subtitle=f"set {profile!r} as the default profile",
                 autocomplete=profile,
-                arg=cmd,
                 icon=IAM_ICON,
-            ).set_name(profile)
+            ).set_fuzzy_match_name(profile)
             item.run_script(cmd=cmd)
+            item.arg = profile
             item.send_notification(
                 title=f"Set AWS CLI default profile",
                 subtitle=f"profile = {profile!r}\nregion = {region!r}",
@@ -75,31 +77,8 @@ class Handler(afwf.Handler):
         # example:
         # - "  any query would be fine  "
         else:
-            if q.trimmed_parts[0] == "?":
-                largetype = "\n".join(
-                    [
-                        (
-                            "Let's say you have two predefined aws profiles in your "
-                            "'~/.aws/config' file and '~/.aws/credentials' file, "
-                            "'company_abc_us_east_1' and 'group_xyz_us_east_2'. "
-                            "You can use full text search to locate the profile, "
-                            "and hit 'enter' to set it as the default profile. "
-                            "It actually copies all the data in the selected profile "
-                            "to the 'default' profile. "
-                        )
-                    ]
-                )
-                sf.items.append(
-                    Item(
-                        title="This workflow can set given AWS CLI profile as the default",
-                        subtitle="hit 'CMD + L' to see more details",
-                        autocomplete=" ",
-                        text=afwf.Text(
-                            largetype=largetype,
-                        ),
-                        icon=afwf.Icon.from_image_file(afwf.IconFileEnum.info),
-                    )
-                )
+            if q.trimmed_parts[0].startswith("?"):
+                sf.items.append(get_help_item())
             else:
                 sf.items.extend(
                     FuzzyItem.from_items(items).sort(" ".join(q.trimmed_parts))
