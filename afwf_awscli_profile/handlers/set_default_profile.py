@@ -53,7 +53,7 @@ class Handler(afwf.Handler):
             # afwf.log_debug_info(f"will run command: {cmd}")
             item = Item(
                 title=f"{profile} | {region}",
-                subtitle=f"set {profile!r} as the default profile",
+                subtitle=f"set {profile!r} as the default profile, hit 'CMD + C' to copy the profile name.",
                 autocomplete=profile,
                 icon=IAM_ICON,
             ).set_fuzzy_match_name(profile)
