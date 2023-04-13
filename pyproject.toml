@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "afwf_awscli_profile"
-version = "0.1.2"
-description = "A sample Alfred Workflow Python project"
+version = "0.2.1"
+description = "AWS CLI Profile Alfred Workflow "
 authors = ["Sanhe Hu <husanhe@gmail.com>"]
 
 
